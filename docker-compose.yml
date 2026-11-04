@@ -1,0 +1,59 @@
+# Paso 0.3 de la guía. Los valores ${...} salen del archivo .env (copia de .env.example).
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: sv-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${DB_PASSWORD}"]
+      interval: 10s
+      retries: 10
+
+  eureka-server:
+    image: steeltoeoss/eureka-server:latest
+    container_name: sv-eureka
+    ports:
+      - "8761:8761"
+
+  ms-inventario:
+    build: ./ms-inventario
+    container_name: ms-inventario
+    ports:
+      - "8084:8084"
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/inventario_db?allowPublicKeyRetrieval=true&useSSL=false
+      DB_USER: root
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      EUREKA_URL: http://eureka-server:8761/eureka/
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+
+  ms-catalogo:
+    build: ./ms-catalogo
+    container_name: ms-catalogo
+    ports:
+      - "8083:8083"
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/catalogo_db?allowPublicKeyRetrieval=true&useSSL=false
+      DB_USER: root
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      EUREKA_URL: http://eureka-server:8761/eureka/
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+
+volumes:
+  mysql-data:
