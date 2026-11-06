@@ -4,6 +4,11 @@ import cl.sonidovivo.inventario.dto.MovimientoDTO;
 import cl.sonidovivo.inventario.dto.StockDTO;
 import cl.sonidovivo.inventario.enums.TipoMovimiento;
 import cl.sonidovivo.inventario.model.Inventario;
+
+import cl.sonidovivo.inventario.dto.MovimientoDTO;
+import cl.sonidovivo.inventario.dto.StockDTO;
+import cl.sonidovivo.inventario.enums.TipoMovimiento;
+import cl.sonidovivo.inventario.model.Inventario;
 import cl.sonidovivo.inventario.model.MovimientoStock;
 import cl.sonidovivo.inventario.repository.InventarioRepository;
 import cl.sonidovivo.inventario.repository.MovimientoStockRepository;
