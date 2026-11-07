@@ -1,4 +1,4 @@
-# Paso 0.3 de la guía. Los valores ${...} salen del archivo .env (copia de .env.example).
+# docker-compose COMPLETO de Sonido Vivo (los 8 servicios + gateway). Los valores ${...} salen del archivo .env (copia de .env.example).
 services:
   mysql:
     image: mysql:8.4
@@ -52,6 +52,118 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+      eureka-server:
+        condition: service_started
+
+  ms-auth:
+    build: ./ms-auth
+    container_name: ms-auth
+    ports:
+      - "8081:8081"
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      EUREKA_URL: http://eureka-server:8761/eureka/
+    depends_on:
+      eureka-server:
+        condition: service_started
+
+  ms-usuarios:
+    build: ./ms-usuarios
+    container_name: ms-usuarios
+    ports:
+      - "8082:8082"
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/usuarios_db?allowPublicKeyRetrieval=true&useSSL=false
+      DB_USER: root
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      EUREKA_URL: http://eureka-server:8761/eureka/
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+
+  ms-ubicaciones:
+    build: ./ms-ubicaciones
+    container_name: ms-ubicaciones
+    ports:
+      - "8087:8087"
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/ubicaciones_db?allowPublicKeyRetrieval=true&useSSL=false
+      DB_USER: root
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      EUREKA_URL: http://eureka-server:8761/eureka/
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+
+  ms-pedidos:
+    build: ./ms-pedidos
+    container_name: ms-pedidos
+    ports:
+      - "8086:8086"
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/pedidos_db?allowPublicKeyRetrieval=true&useSSL=false
+      DB_USER: root
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      EUREKA_URL: http://eureka-server:8761/eureka/
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+
+  ms-pagos:
+    build: ./ms-pagos
+    container_name: ms-pagos
+    ports:
+      - "8088:8088"
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/pagos_db?allowPublicKeyRetrieval=true&useSSL=false
+      DB_USER: root
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      EUREKA_URL: http://eureka-server:8761/eureka/
+      WEBPAY_RETURN_URL: http://localhost:8080/api/pagos/retorno
+      FRONT_URL: http://localhost:5173
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+
+  # OPCIONAL: solo si deciden guardar el carrito en el servidor
+  # ms-carrito:
+  #   build: ./ms-carrito
+  #   container_name: ms-carrito
+  #   ports:
+  #     - "8085:8085"
+  #   environment:
+  #     DB_URL: jdbc:mysql://mysql:3306/carrito_db?allowPublicKeyRetrieval=true&useSSL=false
+  #     DB_USER: root
+  #     DB_PASSWORD: ${DB_PASSWORD}
+  #     JWT_SECRET: ${JWT_SECRET}
+  #     EUREKA_URL: http://eureka-server:8761/eureka/
+  #   depends_on:
+  #     mysql:
+  #       condition: service_healthy
+  #     eureka-server:
+  #       condition: service_started
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA_URL: http://eureka-server:8761/eureka/
+      FRONT_URL: http://localhost:5173
+    depends_on:
       eureka-server:
         condition: service_started
 
