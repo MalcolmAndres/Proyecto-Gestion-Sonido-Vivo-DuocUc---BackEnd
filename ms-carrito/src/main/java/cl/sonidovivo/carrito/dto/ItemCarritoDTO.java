@@ -1,3 +1,13 @@
 package cl.sonidovivo.carrito.dto;
 
-// ItemCarritoDTO: escribe esta clase siguiendo el Paso 3.1 de la guía.
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ItemCarritoDTO {
+    private Long productoId;
+    private Integer cantidad;
+}
