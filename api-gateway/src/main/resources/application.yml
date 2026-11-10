@@ -46,11 +46,11 @@ spring:
               uri: lb://MS-PAGOS
               predicates:
                 - Path=/api/pagos/**
-            # OPCIONAL (solo si usan ms-carrito):
-            # - id: carrito
-            #   uri: lb://MS-CARRITO
-            #   predicates:
-            #     - Path=/api/carrito/**
+            
+            - id: carrito
+              uri: lb://MS-CARRITO
+              predicates:
+                - Path=/api/carrito/**
             # /internal/** NO se publica: solo lo usan los microservicios entre ellos
 
 eureka:
