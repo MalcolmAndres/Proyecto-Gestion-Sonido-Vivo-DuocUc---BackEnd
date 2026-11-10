@@ -137,23 +137,22 @@ services:
       eureka-server:
         condition: service_started
 
-  # OPCIONAL: solo si deciden guardar el carrito en el servidor
-  # ms-carrito:
-  #   build: ./ms-carrito
-  #   container_name: ms-carrito
-  #   ports:
-  #     - "8085:8085"
-  #   environment:
-  #     DB_URL: jdbc:mysql://mysql:3306/carrito_db?allowPublicKeyRetrieval=true&useSSL=false
-  #     DB_USER: root
-  #     DB_PASSWORD: ${DB_PASSWORD}
-  #     JWT_SECRET: ${JWT_SECRET}
-  #     EUREKA_URL: http://eureka-server:8761/eureka/
-  #   depends_on:
-  #     mysql:
-  #       condition: service_healthy
-  #     eureka-server:
-  #       condition: service_started
+   ms-carrito:
+     build: ./ms-carrito
+     container_name: ms-carrito
+     ports:
+       - "8085:8085"
+     environment:
+       DB_URL: jdbc:mysql://mysql:3306/carrito_db?allowPublicKeyRetrieval=true&useSSL=false
+       DB_USER: root
+       DB_PASSWORD: ${DB_PASSWORD}
+       JWT_SECRET: ${JWT_SECRET}
+       EUREKA_URL: http://eureka-server:8761/eureka/
+     depends_on:
+       mysql:
+         condition: service_healthy
+       eureka-server:
+         condition: service_started
 
   api-gateway:
     build: ./api-gateway
