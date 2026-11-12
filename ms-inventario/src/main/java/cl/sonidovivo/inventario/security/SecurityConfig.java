@@ -24,9 +24,9 @@ public class SecurityConfig {
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/swagger-ui/**", "/swaggerui.html", "/v3/api-docs/**", "/actuator/**", "/error").permitAll()
-.requestMatchers(HttpMethod.GET,
-"/internal/inventario").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/actuator/**", "/error").permitAll()
+                        // Solo otros microservicios: el gateway NO publica /internal/**
+                        // y en docker-compose el puerto queda solo en 127.0.0.1
                         .requestMatchers("/internal/**").permitAll()
                         .requestMatchers(HttpMethod.PUT,
                                 "/api/productos/*/stock").hasAnyRole("ADMIN", "VENDEDOR")
