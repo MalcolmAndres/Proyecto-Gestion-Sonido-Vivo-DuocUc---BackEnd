@@ -25,7 +25,7 @@ public class SecurityConfig {
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/swagger-ui/**", "/swagger ui.html", "/v3/api-docs/**", "/actuator/**", "/error").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/actuator/**", "/error").permitAll()
                                  .requestMatchers(HttpMethod.GET, "/api/productos/**", "/api/categorias/**").permitAll()
                                  .requestMatchers(HttpMethod.GET, "/internal/**").permitAll()
                                  .requestMatchers("/api/productos/**", "/api/categorias/**").hasRole("ADMIN")
