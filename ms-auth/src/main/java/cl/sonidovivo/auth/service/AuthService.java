@@ -30,11 +30,13 @@ public class AuthService {
         try {
             usuario = usuariosClient.buscarPorEmail(request.getEmail().trim().toLowerCase());
         } catch (FeignException.NotFound e) {        // ms-usuarios respondió 404: ese correo no existe
+            log.warn("Login fallido para {}", request.getEmail());   // nunca se registra la contraseña
             throw new SolicitudInvalidaException(CREDENCIALES);
         }
 
         // BCrypt compara la clave escrita con el hash guardado
         if (!passwordEncoder.matches(request.getPassword(), usuario.getPasswordHash())) {
+            log.warn("Login fallido para {}", request.getEmail());   // nunca se registra la contraseña
             throw new SolicitudInvalidaException(CREDENCIALES);
         }
         if (!Boolean.TRUE.equals(usuario.getActivo())) {

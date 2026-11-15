@@ -31,6 +31,7 @@ services:
       DB_USER: root
       DB_PASSWORD: ${DB_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
+      INTERNAL_KEY: ${INTERNAL_KEY}
       EUREKA_URL: http://eureka-server:8761/eureka/
     depends_on:
       mysql:
@@ -48,6 +49,7 @@ services:
       DB_USER: root
       DB_PASSWORD: ${DB_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
+      INTERNAL_KEY: ${INTERNAL_KEY}
       EUREKA_URL: http://eureka-server:8761/eureka/
     depends_on:
       mysql:
@@ -62,6 +64,7 @@ services:
       - "127.0.0.1:8081:8081"
     environment:
       JWT_SECRET: ${JWT_SECRET}
+      INTERNAL_KEY: ${INTERNAL_KEY}
       EUREKA_URL: http://eureka-server:8761/eureka/
     depends_on:
       eureka-server:
@@ -77,6 +80,7 @@ services:
       DB_USER: root
       DB_PASSWORD: ${DB_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
+      INTERNAL_KEY: ${INTERNAL_KEY}
       EUREKA_URL: http://eureka-server:8761/eureka/
     depends_on:
       mysql:
@@ -94,6 +98,7 @@ services:
       DB_USER: root
       DB_PASSWORD: ${DB_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
+      INTERNAL_KEY: ${INTERNAL_KEY}
       EUREKA_URL: http://eureka-server:8761/eureka/
     depends_on:
       mysql:
@@ -111,6 +116,7 @@ services:
       DB_USER: root
       DB_PASSWORD: ${DB_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
+      INTERNAL_KEY: ${INTERNAL_KEY}
       EUREKA_URL: http://eureka-server:8761/eureka/
     depends_on:
       mysql:
@@ -128,6 +134,7 @@ services:
       DB_USER: root
       DB_PASSWORD: ${DB_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
+      INTERNAL_KEY: ${INTERNAL_KEY}
       EUREKA_URL: http://eureka-server:8761/eureka/
       WEBPAY_RETURN_URL: http://localhost:8080/api/pagos/retorno
       FRONT_URL: http://localhost:5173
@@ -147,6 +154,7 @@ services:
       DB_USER: root
       DB_PASSWORD: ${DB_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
+      INTERNAL_KEY: ${INTERNAL_KEY}
       EUREKA_URL: http://eureka-server:8761/eureka/
     depends_on:
       mysql:

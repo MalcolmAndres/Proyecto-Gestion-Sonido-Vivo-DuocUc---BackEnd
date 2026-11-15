@@ -80,12 +80,18 @@ public class PagoService {
         // El cliente apretó "Anular"
         if (tbkToken != null && !tbkToken.isBlank()) {
             Pago pago = buscarPorToken(tbkToken);
+            if (pago.getEstado() != EstadoPago.PENDIENTE) {   // ya se cerró antes: no se toca
+                return frontUrl + "/pago/resultado?pedido=" + pago.getPedidoId() + "&estado=error";
+            }
             return cerrar(pago, EstadoPago.ANULADO);
         }
 
         // Flujo normal: hay que confirmar (commit)
         if (tokenWs != null && !tokenWs.isBlank()) {
             Pago pago = buscarPorToken(tokenWs);
+            if (pago.getEstado() != EstadoPago.PENDIENTE) {   // ya se cerró antes: no se toca
+                return frontUrl + "/pago/resultado?pedido=" + pago.getPedidoId() + "&estado=error";
+            }
             EstadoPago resultado;
             try {
                 WebpayCommitResponse commit = webpayClient.confirmar(tokenWs);
