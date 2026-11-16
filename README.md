@@ -1,12 +1,3 @@
-   ____     ____      _   _   ____    U  ___ u             U  ___ u  __  __     ____   
-U /"___|uU |  _"\ uU |"|u| |U|  _"\ u  \/"_ \/              \/"_ \/U|' \/ '|uU /"___|u 
-\| |  _ / \| |_) |/ \| |\| |\| |_) |/  | | | |     U  u     | | | |\| |\/| |/\| |  _ / 
- | |_| |   |  _ <    | |_| | |  __/.-,_| |_| |     /___\.-,_| |_| | | |  | |  | |_| |  
-  \____|   |_| \_\  <<\___/  |_|    \_)-\___/     |__"__|\_)-\___/  |_|  |_|   \____|  
-  _)(|_    //   \\_(__) )(   ||>>_       \\                   \\   <<,-,,-.    _)(|_   
- (__)__)  (__)  (__)   (__) (__)__)     (__)                 (__)   (./  \.)  (__)__)  
-
-
 # Sonido Vivo – Backend
 
 Backend de la tienda de instrumentos **Sonido Vivo** (proyecto Duoc UC). Está hecho con **microservicios**: en vez de una sola aplicación grande, hay varias aplicaciones Spring Boot pequeñas, cada una responsable de una parte del negocio (usuarios, catálogo, carrito, pedidos, pagos, etc.), y un **API Gateway** que las junta detrás de una sola dirección.
